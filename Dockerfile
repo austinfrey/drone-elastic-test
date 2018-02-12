@@ -1,5 +1,5 @@
 FROM node:8.9-alpine
-COPY config.json .
+COPY config.js .
 COPY package.json .
 COPY app.js .
 RUN npm install
