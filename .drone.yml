@@ -1,0 +1,35 @@
+pipeline:
+  build:
+    image: node:8.9-alpine
+    commands:
+      - npm install
+
+  publish:
+    image: plugins/docker
+    repo: aafrey/drone-lb-test
+    tags:
+      - latest
+      - 0.0.1-${DRONE_COMMIT_SHA:0:7}
+    environment:
+      - CONSUMER_KEY=${CONSUMER_KEY}
+      - CONSUMER_SECRET=${CONSUMER_SECRET}
+      - ACCESS_TOKEN_KEY=${ACCESS_TOKEN_KEY}
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET}
+      - ELASTIC_URL=${ELASTIC_URL}
+    secrets:
+      - docker_username
+      - docker_password
+      - consumer_key
+      - consumer_secret_key
+      - access_token_key
+      - access_token_secret
+      - elastic_url
+
+  rancher:
+    image: peloton/drone-rancher
+    url: http://admin.zi.gy
+    access_key: ${RANCHER_ACCESS_KEY}
+    secret_key: ${RANCHER_SECRET_KEY}
+    service: lb-mongo/api
+    docker_image: aafrey/drone-lb-test:0.0.2-${DRONE_COMMIT_SHA:0:7}
+    secrets: [ rancher_access_key, rancher_secret_key ]
