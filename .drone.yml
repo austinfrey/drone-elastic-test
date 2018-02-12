@@ -6,7 +6,7 @@ pipeline:
 
   publish:
     image: plugins/docker
-    repo: aafrey/drone-lb-test
+    repo: aafrey/drone-elastic-test
     tags:
       - latest
       - 0.0.1-${DRONE_COMMIT_SHA:0:7}
@@ -20,7 +20,7 @@ pipeline:
       - docker_username
       - docker_password
       - consumer_key
-      - consumer_secret_key
+      - consumer_secret
       - access_token_key
       - access_token_secret
       - elastic_url
@@ -30,6 +30,6 @@ pipeline:
     url: http://admin.zi.gy
     access_key: ${RANCHER_ACCESS_KEY}
     secret_key: ${RANCHER_SECRET_KEY}
-    service: lb-mongo/api
-    docker_image: aafrey/drone-lb-test:0.0.2-${DRONE_COMMIT_SHA:0:7}
+    service: ELK/tweet_cache
+    docker_image: aafrey/drone-elastic-test:0.0.2-${DRONE_COMMIT_SHA:0:7}
     secrets: [ rancher_access_key, rancher_secret_key ]
