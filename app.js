@@ -5,7 +5,7 @@
 
 let util = require('util')
 var Twitter = require('twitter');
-let config = require('./config.json');
+let config = require('./config.js');
 let async = require('async');
 let fs = require('fs');
 let request = require('request');
@@ -42,5 +42,4 @@ stream.on('data', (tweet) => {
 stream.on('error', function(e) {
     console.error(e);
     console.error(e.stack);
-    process.exit(-1);
 });
